@@ -32,3 +32,17 @@ Your application should handle duplicate entries
 ### Example
 - **POST**: “url”:”www.google.maps.com” returns “alias”:”BdfGT”
 - **GET**: “http:localhost/BdfGT” redirect to “www.google.maps.com"
+
+## Execution
+
+1. Clone or download the source code.
+2. Install Maven, you can check if you have maven by executing the following command:
+```bash
+mvn -version
+```
+3. Open a terminal and execute the following command:
+```bash
+mvn spring-boot:run
+```
+4. If it's the first time you run the program it may take a few minutes to start, since the dependencies have to be downloaded.
+5. The program will be available at http://localhost:8080.
