@@ -2,8 +2,11 @@ package javaSchool.Task000;
 
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +27,20 @@ public class URLShortenerController {
 	}
 	
 	@GetMapping(value = "/{urlShorten}")
-	public void getURLAndRedirect() {
+	public void getURLAndRedirect(
+			HttpServletResponse response, 
+			@PathVariable("urlShorten") String urlShorten
+		) throws Exception {
+		URLShortener urlShortener = null;
+		Optional<URLShortener> url = repo.findById(urlShorten);
+		if (url.isPresent()) {
+			urlShortener = url.get();
+		}
+		if (urlShortener == null) {
+			response.setStatus(404);
+		} else {
+			response.sendRedirect(url.get().getUrl());
+		}
 		return;
 	}
 	
