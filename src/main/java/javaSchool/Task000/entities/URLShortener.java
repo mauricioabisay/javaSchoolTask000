@@ -2,8 +2,15 @@ package javaSchool.Task000.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQueries({
+	@NamedQuery(
+		name = "URLShortener.findByFullURL", 
+		query = "from URLShortener u where u.url = :fullURL")
+})
 public class URLShortener {
 	@Id
 	private String shortUrl;
