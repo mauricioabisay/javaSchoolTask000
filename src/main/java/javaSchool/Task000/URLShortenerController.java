@@ -1,5 +1,6 @@
 package javaSchool.Task000;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
@@ -46,6 +47,10 @@ public class URLShortenerController {
 	
 	@PostMapping
 	public URLShortener shortAndSave(@RequestBody URLShortener request) {
+		List<URLShortener> urlList = repo.findByFullURL(request.getUrl());
+		if (urlList.size() > 0) {
+			return urlList.get(0);
+		}
 		int counter = 0;
 		Optional<URLShortener> url;
 		do {
