@@ -1,5 +1,7 @@
 package javaSchool.Task000;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +30,18 @@ public class URLShortenerController {
 	
 	@PostMapping
 	public URLShortener shortAndSave(@RequestBody URLShortener request) {
-		return repo.save(request);
+		int counter = 0;
+		Optional<URLShortener> url;
+		do {
+			request.setShortUrl(URLShortenerService.shortURL(request.getUrl(), counter));
+			url = repo.findById(request.getShortUrl());
+			counter++;
+		} while(url.isPresent());
+		try {
+			repo.save(request);
+		} catch(IllegalArgumentException exception) {
+			throw exception;
+		}
+		return request;
 	}
 }
